@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>C3B1XBOT – Documentation</title>
+
+  <style>
+    :root {
+      --bg: #050810;
+      --bg-alt: #101522;
+      --card-bg: #141b2c;
+      --accent: #5865f2;
+      --accent-soft: rgba(88, 101, 242, 0.25);
+      --text: #ffffff;
+      --text-muted: #a8b2d1;
+      --border: #232b3e;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.6);
+      --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #111827 0, #020617 45%, #000 100%);
+      color: var(--text);
+      font-family: var(--font-main);
+      line-height: 1.6;
+    }
+
+    /* NAV + HERO */
+
+    .hero {
+      padding: 24px clamp(18px, 3vw, 32px) 32px;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+
+    .logo {
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 1rem;
+    }
+    .logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 16px;
+      font-size: 0.9rem;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: 999px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-links a:hover {
+      background: var(--accent-soft);
+      color: var(--text);
+    }
+
+    .hero-content {
+      display: flex;
+      justify-content: space-between;
+      gap: 32px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(1.9rem, 3vw, 2.4rem);
+      margin-bottom: 12px;
+    }
+
+    .hero-content p {
+      color: var(--text-muted);
+      max-width: 640px;
+    }
+
+    .hero-buttons {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 18px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: transform 0.15s ease, box-shadow 0.15s ease,
+        background 0.15s;
+    }
+    .btn.primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: var(--shadow-soft);
+    }
+    .btn.primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 22px 45px rgba(88, 101, 242, 0.65);
+    }
+    .btn.secondary {
+      background: transparent;
+      color: var(--text-muted);
+      border-color: var(--border);
+    }
+    .btn.secondary:hover {
+      background: var(--accent-soft);
+      color: var(--text);
+    }
+
+    .hero-badge {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .badge {
+      font-size: 0.75rem;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #1f2937, #020617);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+
+    /* SECTIONS */
+
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px clamp(18px, 3vw, 32px) 32px;
+    }
+
+    .section h2 {
+      font-size: 1.4rem;
+      margin-bottom: 8px;
+    }
+    .section p {
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    /* LIST & CARDS */
+
+    .feature-list {
+      list-style: none;
+      margin: 12px 0 20px;
+    }
+    .feature-list li {
+      margin-bottom: 6px;
+      color: var(--text-muted);
+    }
+
+    .card-grid {
+      display: grid;
+      gap: 16px;
+      margin-top: 10px;
+    }
+    .card-grid.two {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+    .card-grid.three {
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    }
+
+    .card {
+      background: rgba(10, 16, 30, 0.95);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      padding: 16px 18px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .card h3 {
+      margin-bottom: 8px;
+    }
+    .card p,
+    .card li {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .card ol,
+    .card ul {
+      margin-left: 18px;
+      margin-top: 6px;
+    }
+
+    .card code,
+    pre code {
+      background: #020617;
+      border-radius: 6px;
+      padding: 2px 5px;
+      font-size: 0.8rem;
+    }
+
+    pre {
+      background: #020617;
+      border-radius: 8px;
+      padding: 8px 10px;
+      overflow-x: auto;
+      font-size: 0.8rem;
+      margin-top: 8px;
+    }
+
+    /* COMMANDS */
+
+    .category-title {
+      margin-top: 26px;
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+
+    .command-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 12px;
+    }
+
+    .command-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.55);
+    }
+
+    .command-card h4 {
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+    .command-card p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .note {
+      font-size: 0.85rem;
+      margin-top: 12px;
+      color: #fbbf24;
+    }
+
+    /* FOOTER */
+
+    .footer {
+      border-top: 1px solid #111827;
+      text-align: center;
+      padding: 16px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      background: #020617;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 720px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .hero-content {
+        flex-direction: column;
+      }
+
+      .hero-badge {
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <nav class="navbar">
+      <div class="logo">C3B1XBOT<span>Docs</span></div>
+      <ul class="nav-links">
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#access-system">Access System</a></li>
+        <li><a href="#commands">Commands</a></li>
+      </ul>
+    </nav>
+
+    <div class="hero-content">
+      <div>
+        <h1>C3B1XBOT – Discord Bot Documentation</h1>
+        <p>
+          C3B1XBOT adalah bot multi-fungsi untuk manajemen server, sistem store,
+          verifikasi, logging, dan utilitas lain yang dibuat oleh C3B1XHUB.
+        </p>
+        <div class="hero-buttons">
+          <!-- Ganti link di bawah ke link invite bot kamu -->
+          <a href="https://discord.com" class="btn primary" target="_blank">
+            Invite Bot
+          </a>
+          <a href="#commands" class="btn secondary">
+            Lihat Daftar Command
+          </a>
+        </div>
+      </div>
+      <div class="hero-badge">
+        <span class="badge">#KAUMKUSAM</span>
+        <span class="badge">C3B1XHUB</span>
+        <span class="badge">Multi-Skill Bot</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- OVERVIEW -->
+    <section id="overview" class="section">
+      <h2>🧾 Overview</h2>
+      <p>
+        C3B1XBOT dirancang untuk membantu mengelola server kamu dengan fitur:
+      </p>
+      <ul class="feature-list">
+        <li>⚙️ <strong>Owner & Admin Tools</strong> – manajemen konfigurasi, akses, dan update logs.</li>
+        <li>🛒 <strong>Store System</strong> – kelola stock produk, kirim kode, dan order logs.</li>
+        <li>✅ <strong>Verification System</strong> – sistem verifikasi member dengan log lengkap.</li>
+        <li>📊 <strong>Logs & Statistik</strong> – vouch, invite, server log, bot status, dan lainnya.</li>
+        <li>🛡️ <strong>Security</strong> – anti-link, anti-spam (via log & config), moderation tools.</li>
+        <li>🧰 <strong>Utility</strong> – ping, status, sticky message, reaction role, AFK, dan lain-lain.</li>
+      </ul>
+
+      <div class="card-grid two">
+        <div class="card">
+          <h3>Quick Start</h3>
+          <ol>
+            <li>Invite bot ke server dengan permission <strong>Administrator</strong> (disarankan).</li>
+            <li>Jalankan <code>/setup-config</code> untuk konfigurasi dasar (log channel, dsb).</li>
+            <li>Atur akses command premium/admin via <code>/access</code>.</li>
+            <li>Gunakan <code>/help</code> untuk melihat semua command di server kamu.</li>
+          </ol>
+        </div>
+        <div class="card">
+          <h3>Prefix & Slash</h3>
+          <p>
+            C3B1XBOT menggunakan:
+          </p>
+          <ul>
+            <li>🔹 <strong>Slash Commands</strong> – <code>/command</code></li>
+            <li>🔹 <strong>Prefix Commands</strong> – default: <code>.</code> (bisa diubah di config)</li>
+          </ul>
+          <p>
+            Sebagian besar fitur utama sudah tersedia sebagai slash command.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACCESS SYSTEM -->
+    <section id="access-system" class="section">
+      <h2>🔐 Access System (/access)</h2>
+      <p>
+        C3B1XBOT menggunakan sistem akses per-command. Secara default, semua
+        command bisa digunakan semua user (selama permission Discord mencukupi),
+        kecuali jika di-lock melalui <code>/access</code>.
+      </p>
+
+      <div class="card-grid three">
+        <div class="card">
+          <h3>1. Owner Only</h3>
+          <p>
+            Command tertentu bisa dibuat hanya untuk owner bot.
+          </p>
+          <pre><code>/access add-command-owner command: access, c3b1xbot-update</code></pre>
+          <p>Contoh command owner:</p>
+          <ul>
+            <li><code>/access</code></li>
+            <li><code>/c3b1xbot-update</code></li>
+            <li><code>/update-log</code></li>
+            <li><code>/setup-config</code></li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>2. User Whitelist (Premium)</h3>
+          <p>
+            Beri akses ke user tertentu untuk command premium tanpa mengganggu
+            command lain.
+          </p>
+          <pre><code>/access add-command-user
+  command: stock, send-product
+  user: @UserPremium</code></pre>
+          <p>
+            Cocok untuk:
+          </p>
+          <ul>
+            <li>Premium store manager</li>
+            <li>Staff khusus</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>3. Role Whitelist (Admin)</h3>
+          <p>
+            Beri akses command ke role tertentu per server.
+          </p>
+          <pre><code>/access add-command-role
+  command: ban, kick, timeout
+  role: @Admin</code></pre>
+          <p>
+            Contoh: hanya role <code>@Admin</code> yang bisa pakai
+            command moderasi tertentu.
+          </p>
+        </div>
+      </div>
+
+      <p class="note">
+        Owner bot <strong>selalu</strong> bisa memakai semua command, walaupun
+        command tersebut di-lock untuk user/role lain.
+      </p>
+    </section>
+
+    <!-- COMMANDS -->
+    <section id="commands" class="section">
+      <h2>📚 Command Reference</h2>
+      <p>
+        Berikut adalah ringkasan command utama C3B1XBOT yang dikelompokkan per kategori.
+        Nama & fungsi bisa kamu sesuaikan lagi di file ini jika ada update baru.
+      </p>
+
+      <!-- OWNER -->
+      <h3 class="category-title">👑 Owner / Management</h3>
+      <div class="command-grid">
+        <div class="command-card">
+          <h4>/access</h4>
+          <p>Mengelola akses command (owner-only). Support owner/user/role whitelist & bulk.</p>
+        </div>
+        <div class="command-card">
+          <h4>/c3b1xbot-update</h4>
+          <p>Kirim embed update logs / changelog untuk bot.</p>
+        </div>
+        <div class="command-card">
+          <h4>/update-log</h4>
+          <p>Update / kirim log perubahan fitur bot.</p>
+        </div>
+        <div class="command-card">
+          <h4>/panel</h4>
+          <p>Integrasi panel / informasi panel (jika digunakan).</p>
+        </div>
+        <div class="command-card">
+          <h4>/setup-config</h4>
+          <p>Setup konfigurasi awal bot (log channel, prefix, dsb).</p>
+        </div>
+        <div class="command-card">
+          <h4>/set-vouch</h4>
+          <p>Set channel dan konfigurasi sistem vouch.</p>
+        </div>
+        <div class="command-card">
+          <h4>/set-antilink</h4>
+          <p>Aktif/nonaktif fitur anti-link.</p>
+        </div>
+        <div class="command-card">
+          <h4>/set-antilink-timeout</h4>
+          <p>Atur durasi timeout untuk pelanggaran anti-link.</p>
+        </div>
+        <div class="command-card">
+          <h4>/set-log-antilink</h4>
+          <p>Set channel log untuk pelanggaran anti-link.</p>
+        </div>
+        <div class="command-card">
+          <h4>/set-log-antispam</h4>
+          <p>Set channel log untuk sistem anti-spam.</p>
+        </div>
+        <div class="command-card">
+          <h4>/set-log-botstatus</h4>
+          <p>Set channel log untuk status bot.</p>
+        </div>
+        <div class="command-card">
+          <h4>/set-log-server</h4>
+          <p>Set channel log untuk server events.</p>
+        </div>
+        <div class="command-card">
+          <h4>/set-log-verifikasi</h4>
+          <p>Set channel log utama verifikasi.</p>
+        </div>
+        <div class="command-card">
+          <h4>/set-log-verifikasi-help</h4>
+          <p>Set channel bantuan verifikasi (help information).</p>
+        </div>
+        <div class="command-card">
+          <h4>/set-log-verifikasi-help-role</h4>
+          <p>Set role yang bisa melihat atau membantu verifikasi.</p>
+        </div>
+      </div>
+
+      <!-- STORE -->
+      <h3 class="category-title">🛒 Store / Product System</h3>
+      <div class="command-grid">
+        <div class="command-card">
+          <h4>/store-setup</h4>
+          <p>Setup channel store: live stock, bot status, dan order logs.</p>
+        </div>
+        <div class="command-card">
+          <h4>/stock</h4>
+          <p>Import & kelola stock produk dari file <code>.txt</code>.</p>
+        </div>
+        <div class="command-card">
+          <h4>/send-product</h4>
+          <p>Kirim produk ke user (baca kode dari stock) + kirim via DM + order logs.</p>
+        </div>
+      </div>
+
+      <!-- MODERATION -->
+      <h3 class="category-title">🛡️ Moderation</h3>
+      <div class="command-grid">
+        <div class="command-card">
+          <h4>/ban</h4>
+          <p>Ban member dari server.</p>
+        </div>
+        <div class="command-card">
+          <h4>/kick</h4>
+          <p>Kick member dari server.</p>
+        </div>
+        <div class="command-card">
+          <h4>/timeout</h4>
+          <p>Timeout member untuk jangka waktu tertentu.</p>
+        </div>
+        <div class="command-card">
+          <h4>/clear</h4>
+          <p>Hapus beberapa pesan sekaligus di channel.</p>
+        </div>
+        <div class="command-card">
+          <h4>/lock</h4>
+          <p>Lock channel (mencegah member mengirim pesan).</p>
+        </div>
+        <div class="command-card">
+          <h4>/unlock</h4>
+          <p>Unlock channel yang sebelumnya di-lock.</p>
+        </div>
+        <div class="command-card">
+          <h4>/nuke</h4>
+          <p>Clone channel dan hapus history chat (fitur “nuke”).</p>
+        </div>
+      </div>
+
+      <!-- VERIFICATION -->
+      <h3 class="category-title">✅ Verification & Security</h3>
+      <div class="command-grid">
+        <div class="command-card">
+          <h4>/send-verification</h4>
+          <p>Kirim panel verifikasi ke channel (button / select menu).</p>
+        </div>
+        <div class="command-card">
+          <h4>/verification-stats</h4>
+          <p>Lihat statistik verifikasi (jumlah user terverifikasi, dsb).</p>
+        </div>
+      </div>
+
+      <!-- LOGS & STATS -->
+      <h3 class="category-title">📊 Logs & Statistik</h3>
+      <div class="command-grid">
+        <div class="command-card">
+          <h4>/logs</h4>
+          <p>Tampilkan embed logs detail sesuai konfigurasi.</p>
+        </div>
+        <div class="command-card">
+          <h4>/logs-simple</h4>
+          <p>Versi simple dari logs (lebih ringkas).</p>
+        </div>
+        <div class="command-card">
+          <h4>/server-log</h4>
+          <p>Informasi dan konfigurasi log server.</p>
+        </div>
+        <div class="command-card">
+          <h4>/invite-leaderboard</h4>
+          <p>Leaderboard invite (siapa yang paling banyak meng-invite).</p>
+        </div>
+        <div class="command-card">
+          <h4>/vouch</h4>
+          <p>Kirim vouch untuk user (testimoni / trust).</p>
+        </div>
+        <div class="command-card">
+          <h4>/vouch-stats</h4>
+          <p>Lihat statistik vouch untuk user tertentu.</p>
+        </div>
+        <div class="command-card">
+          <h4>/vouch-leaderboard</h4>
+          <p>Leaderboard user dengan vouch terbanyak.</p>
+        </div>
+      </div>
+
+      <!-- UTILITY -->
+      <h3 class="category-title">🧰 Utility & Misc</h3>
+      <div class="command-grid">
+        <div class="command-card">
+          <h4>/help</h4>
+          <p>Menampilkan help dengan kategori + dropdown (seperti Apollo).</p>
+        </div>
+        <div class="command-card">
+          <h4>/ping</h4>
+          <p>Cek latency dan respons bot.</p>
+        </div>
+        <div class="command-card">
+          <h4>/status</h4>
+          <p>Tampilkan status bot / informasi singkat.</p>
+        </div>
+        <div class="command-card">
+          <h4>/afk</h4>
+          <p>Set status AFK dengan alasan tertentu.</p>
+        </div>
+        <div class="command-card">
+          <h4>/sticky</h4>
+          <p>Buat pesan “sticky” yang selalu berada di bawah channel.</p>
+        </div>
+        <div class="command-card">
+          <h4>/reaction-role</h4>
+          <p>Buat pesan reaction role (role dengan klik emoji).</p>
+        </div>
+        <div class="command-card">
+          <h4>/report</h4>
+          <p>Kirim report ke channel atau staff tertentu.</p>
+        </div>
+        <div class="command-card">
+          <h4>/alist, /elist, /rlist</h4>
+          <p>Command list lain (akses / role list / dll – tergantung implementasi kamu).</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>
+      C3B1XBOT &copy; <span id="year"></span> • Made by C3B1XHUB
+    </p>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
